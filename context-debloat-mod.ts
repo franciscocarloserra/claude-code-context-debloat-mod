@@ -5,17 +5,24 @@ import type { Register } from 'claude-code'
  * exactly what will change, the implications and how to revert, using the sections below. Apply
  * nothing until the user confirms. Back up ~/.claude/settings.json first.
  *
+ * WHY
+ * Every new Claude Code session ships a few thousand tokens the model rarely needs: a listing of
+ * every installed skill, full schemas of tools you seldom call, claude.ai connectors and memory
+ * prompts. That text is sent on every turn, costs quota, fills the context window sooner and
+ * dilutes your own instructions. This mod and the settings below cut it without touching the
+ * harness system prompt, unless you ask for /blank or /custom.
+ *
  * INSTALL (this file is the whole plugin; the harness needs two manifests next to it):
- *   mkdir -p ~/.claude/context-debloat/{.claude-plugin,hooks}
- *   cp context-debloat.ts ~/.claude/context-debloat/hooks/
- *   echo '{"modules":["./context-debloat.ts"]}' > ~/.claude/context-debloat/hooks/hooks.json
+ *   mkdir -p ~/.claude/context-debloat-mod/{.claude-plugin,hooks}
+ *   cp context-debloat-mod.ts ~/.claude/context-debloat-mod/hooks/
+ *   echo '{"modules":["./context-debloat-mod.ts"]}' > ~/.claude/context-debloat-mod/hooks/hooks.json
  *   echo '{"name":"debloat","version":"1.0.0","description":"Trim what Claude Code sends the model"}' \
- *     > ~/.claude/context-debloat/.claude-plugin/plugin.json
- *   echo '{"name":"context-debloat","owner":{"name":"local"},"plugins":[{"name":"debloat","source":"./"}]}' \
- *     > ~/.claude/context-debloat/.claude-plugin/marketplace.json
- *   claude plugin marketplace add ~/.claude/context-debloat
- *   claude plugin install debloat@context-debloat --scope user
- * Try it without installing: `claude --plugin-dir ~/.claude/context-debloat` (reloads on save).
+ *     > ~/.claude/context-debloat-mod/.claude-plugin/plugin.json
+ *   echo '{"name":"context-debloat-mod","owner":{"name":"local"},"plugins":[{"name":"debloat","source":"./"}]}' \
+ *     > ~/.claude/context-debloat-mod/.claude-plugin/marketplace.json
+ *   claude plugin marketplace add ~/.claude/context-debloat-mod
+ *   claude plugin install debloat@context-debloat-mod --scope user
+ * Try it without installing: `claude --plugin-dir ~/.claude/context-debloat-mod` (reloads on save).
  *
  * EFFECT (measured, Claude Code 2.1.292, `claude -p`, first request, CLAUDE.md excluded): base
  * context ~16k -> ~9k tokens with the plugin plus the settings below. Interactive sessions start
@@ -44,7 +51,7 @@ import type { Register } from 'claude-code'
  *   env CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: remove it to drop the teammate tools.
  *
  * REVERT
- *   - Plugin: `claude plugin uninstall debloat@context-debloat` (or `/plugin`), or set
+ *   - Plugin: `claude plugin uninstall debloat@context-debloat-mod` (or `/plugin`), or set
  *     KEEP_SKILLS to the skills you want and empty DEFER_TOOLS.
  *   - Settings: restore the backup, or flip each value above (or delete the key).
  *   - /blank and /custom: type the command again, or start a new session.
