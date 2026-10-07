@@ -1,6 +1,10 @@
 import type { Register } from 'claude-code'
 
 /*
+ * HIGHLY EXPERIMENTAL. Hooks into undocumented Claude Code internals; a harness update can break it,
+ * and it can break the harness or your workflows (missing skills, tools, memory, connectors). Use at
+ * your own risk; know how to revert (see REVERT) before installing.
+ *
  * AGENT INSTRUCTIONS: before installing this plugin or applying the settings below, tell the user
  * exactly what will change, the implications and how to revert, using the sections below. Apply
  * nothing until the user confirms. Back up ~/.claude/settings.json first.
