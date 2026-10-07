@@ -9,8 +9,10 @@ import type { Register } from 'claude-code'
  * Every new Claude Code session ships a few thousand tokens the model rarely needs: a listing of
  * every installed skill, full schemas of tools you seldom call, claude.ai connectors and memory
  * prompts. That text is sent on every turn, costs quota, fills the context window sooner and
- * dilutes your own instructions. This mod and the settings below cut it without touching the
- * harness system prompt, unless you ask for /blank or /custom.
+ * dilutes your own instructions. Much of it is scaffolding for earlier, weaker models: canned
+ * skill recipes, auto-memory, always-loaded tool docs. Current models do those tasks from a plain
+ * request. This mod and the settings below cut it without touching the harness system prompt,
+ * unless you ask for /blank or /custom.
  *
  * INSTALL (this file is the whole plugin; the harness needs two manifests next to it):
  *   mkdir -p ~/.claude/context-debloat-mod/{.claude-plugin,hooks}
@@ -25,8 +27,9 @@ import type { Register } from 'claude-code'
  * Try it without installing: `claude --plugin-dir ~/.claude/context-debloat-mod` (reloads on save).
  *
  * EFFECT (measured, Claude Code 2.1.292, `claude -p`, first request, CLAUDE.md excluded): base
- * context ~16k -> ~9k tokens with the plugin plus the settings below. Interactive sessions start
- * larger (~30k -> ~15k observed, not measured cleanly); the saving is roughly the same share.
+ * context ~16k -> ~9k tokens, ~56% of default. What is left is mostly the core tool schemas
+ * (Agent, Bash, Skill, Read, ToolSearch, Edit, Write: about half) and the harness system prompt.
+ * Interactive sessions start larger (more tools); ~30k -> ~15k observed, not measured cleanly.
  *
  * WHAT IT DOES
  * Always on, in every session once installed:
