@@ -60,6 +60,7 @@ import type { Register } from 'claude-code'
  *   "autoMemoryEnabled": false      the model stops writing/reading its own cross-session notes
  *                                   (~600 tokens). CLAUDE.md still loads.
  *   env CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: remove it to drop the teammate tools.
+ *                                   Just use SendMessage, or tail .jsonls lol
  *
  * REVERT
  *   - Plugin: `claude plugin uninstall debloat@context-debloat-mod` (or `/plugin`), or set
