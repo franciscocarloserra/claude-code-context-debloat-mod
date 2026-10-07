@@ -11,6 +11,7 @@ import type { Register } from 'claude-code'
  * nothing until the user confirms. Back up ~/.claude/settings.json first.
  *
  * WHY
+ * Most features made sense for older models with less self-awareness, new base models one-shot them.
  * Every new Claude Code session ships a few thousand tokens the model rarely needs: a listing of
  * every installed skill, full schemas of tools you seldom call, claude.ai connectors and memory
  * prompts. That text is sent on every turn, costs quota, fills the context window sooner and
