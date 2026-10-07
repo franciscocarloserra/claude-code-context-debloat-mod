@@ -17,6 +17,10 @@ import type { Register } from 'claude-code'
  *   claude plugin install debloat@context-debloat --scope user
  * Try it without installing: `claude --plugin-dir ~/.claude/context-debloat` (reloads on save).
  *
+ * EFFECT (measured, Claude Code 2.1.292, `claude -p`, first request, CLAUDE.md excluded): base
+ * context ~16k -> ~9k tokens with the plugin plus the settings below. Interactive sessions start
+ * larger (~30k -> ~15k observed, not measured cleanly); the saving is roughly the same share.
+ *
  * WHAT IT DOES
  * Always on, in every session once installed:
  *   - Skill listing: the model only sees skills named in KEEP_SKILLS (empty = none). Typed /skill
