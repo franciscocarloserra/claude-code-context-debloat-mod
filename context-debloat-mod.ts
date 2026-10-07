@@ -34,6 +34,9 @@ import type { Register } from 'claude-code'
  * context ~16k -> ~9k tokens, ~56% of default. What is left is mostly the core tool schemas
  * (Agent, Bash, Skill, Read, ToolSearch, Edit, Write: about half) and the harness system prompt.
  * Interactive sessions start larger (more tools); ~30k -> ~15k observed, not measured cleanly.
+ * With /blank: the harness system prompt, CLAUDE.md, reminders and tool schemas are dropped too;
+ * a request was ~1.2k tokens (measured, Claude Code 2.1.288), under 10% of default. The model then
+ * knows nothing about the harness, your rules or the project.
  *
  * WHAT IT DOES
  * Always on, in every session once installed:
